@@ -27,7 +27,7 @@ def get_01_features(model, data, all_feature_cols, continous_features):
 
 get_01_features(model, train_X, all_features_cols, 'age')
 
-data['is_gold_age'] = [1 if data['age'].isin([20, 32]) else 0]
+data['is_gold_age'] = data['age'].apply(lambda r: [1 if r.isin([20, 32]) else 0])
 
 ```
 ![image](https://user-images.githubusercontent.com/68730894/115808595-51e68200-a41d-11eb-9098-0ac1ee9ebc80.png)
