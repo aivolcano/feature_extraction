@@ -8,28 +8,32 @@ F(x) = f(x) + x， f(x)可视为DNN（非线性），x可视为LR（线性）
 
 低维（2维）的信息嵌入到n维的空间中，并通过随机矩阵T对特征进行变换，再加上ReLU激活函数，之后在通过 T^(-1)（反变换）进行反变换。当n=2，3时，会导致比较严重的信息丢失，部分特征重叠到一起了；当n=15到30时，信息丢失程度降低。这是因为非线性激活函数（Relu）的存在，每次输入到输出的过程都几乎是不可逆的（信息损失），所以很难从输出反推回完整的输入。
 
-https://user-images.githubusercontent.com/68730894/115326678-3b8fba80-a1c0-11eb-8d74-f4c277a113d8.png
+![image](https://user-images.githubusercontent.com/68730894/116391762-2535ce80-a852-11eb-9998-e4e0bf48ae9b.png)
+![image](https://user-images.githubusercontent.com/68730894/116391781-2830bf00-a852-11eb-95ed-775d568b7240.png)
 
-从数学公式看，如果没有非线性激活函数，残差网络存在与否意义不大。如果残差网络存在，则只是做了简单的平移： image
+
+从数学公式看，如果没有非线性激活函数，残差网络存在与否意义不大。如果残差网络存在，则只是做了简单的平移： 
+
+![image](https://user-images.githubusercontent.com/68730894/116391848-3da5e900-a852-11eb-9770-cd868184e411.png)
 
 增加非线性激活函数之后，上述式子发生改变，模型的特征表达能力大幅提升。这也是为什么Residual Block有2个权重（W_1,W_2）的原因。
 
-image
+![image](https://user-images.githubusercontent.com/68730894/116391900-50b8b900-a852-11eb-9a67-cfb9b91b90b8.png)
+
 
 残差网络升级扩展，数学上证明： 原始残差网络
 
-image
+![image](https://user-images.githubusercontent.com/68730894/115329746-557fcc00-a1c5-11eb-859e-a0871c94a291.png)
 
 增加非线性激活
 
-image
+![image](https://user-images.githubusercontent.com/68730894/115329737-50228180-a1c5-11eb-9b83-280ac2fbe376.png)
 
 为了实现一直堆叠网络而不发生网络退化的需要，何凯明让模型内部结构具备恒等映射能力：将上一层（或几层）之前的输出与本层计算的输出相加，可以将求和的结果输入到激活函数中做为本层的输出。
 
-image
+![image](https://user-images.githubusercontent.com/68730894/116392071-92496400-a852-11eb-81a7-918735f88483.png)
 
-
-
+### 代码结构
 LSTM、GRU、Transformer、DNN等结构的残差网络
 ```python 
 '''TensorFlow'''
@@ -119,6 +123,8 @@ attention_weight = F.prelu((torch.cat([inputs_from_user_activation, out_product,
 
 ![image](https://user-images.githubusercontent.com/68730894/116390304-79d84a00-a850-11eb-829d-c5f39a3983f0.png)
 
+更详细的介绍：https://github.com/aivolcano/RecSys_tf2/tree/main/Wide%26Deep
+
 * DeepFM
 如果我们按照类别特征喂给FM，类别特征+连续特征喂给DNN，我们就可以对DNN部分使用残差网络。!
 
@@ -127,5 +133,7 @@ attention_weight = F.prelu((torch.cat([inputs_from_user_activation, out_product,
 并且我们认为FM是自带残差网络效果的。
 
 [v2-3e62201e619ea3452de06ee9ed0ac0cc_1440w](https://user-images.githubusercontent.com/68730894/116391019-3c27f100-a851-11eb-93d5-ab3f46976304.jpg)
+
+更详细的介绍：https://github.com/aivolcano/RecSys_tf2/tree/main/DeepFM
 
 
