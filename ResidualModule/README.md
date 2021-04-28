@@ -1,3 +1,10 @@
+## 内容模块：
+* 残差网络泛化版的原理 及 数学解释
+* 残差网络模块的代码开发，有 Tensorflow 2.x  和 PyTorch 版本
+* 残差网络的应用：Wide & Deep 原始版本就带有种残差网络
+* 使用残差网络改造 DeepFM
+* 残差网络解决NLP模型退化问题：对LSTM使用残差网络
+
 原始论文中已经说得很清楚了，笔者在这里说一说自己对Wide & Deep的理解：
 
 从模型内容Pooling的思路出发，如果Wide和Deep部分同时喂相同的特征，Wide & Deep是可以用残差网络解释的，并且从一定程度上说，Wide & Deep 自带残差网络。为什么？
@@ -135,5 +142,11 @@ attention_weight = F.prelu((torch.cat([inputs_from_user_activation, out_product,
 [v2-3e62201e619ea3452de06ee9ed0ac0cc_1440w](https://user-images.githubusercontent.com/68730894/116391019-3c27f100-a851-11eb-93d5-ab3f46976304.jpg)
 
 更详细的介绍：https://github.com/aivolcano/RecSys_tf2/tree/main/DeepFM
+
+
+### 残差网络解决模型退化问题
+残差网络的想法源于作者的另外一个项目，使用BERT做文本分类，其中作者把BERT的隐藏层都拿出来融合成一条向量，这条向量再喂给LSTM，原本我们希望LSTM的一系列操作能赋予输入向量更多的非线性特征，但是我们发现模型发生退化问题。因此我们使用到残差网络中的 ResNet 来解决模型退化问题
+
+
 
 
