@@ -82,3 +82,20 @@ attention_weight = F.prelu((torch.cat([inputs_from_user_activation, out_product,
 对于残差连接x+f(x)，x 和 f(x)权重各占0.5，我们也可以使用加权控制信息的流量，由神经网络自己控制遗忘多少信息，保留多少信息。这可以通过设置标量参数β实现，x + βf(x)表达式可以自动学习β的权重。
 ![image](https://user-images.githubusercontent.com/68730894/115814241-40a27300-a427-11eb-9781-52940c59e845.png)
 
+
+### 使用残差网络解释 Wide & Deep 和 DeepFM
+* Wide & Deep
+作者认为 Wide & Deep 是自带残差网络的，只是可能我们暂时没有发现，针对我们改进后的残差网络 F(x) = βf(x) + wx ，是 Wide & deep 的数学表达，f(x) 表示 DNN，赋予数据非线性特征， x 表示LR，赋予数据线性特征
+
+![image](https://user-images.githubusercontent.com/68730894/116390304-79d84a00-a850-11eb-829d-c5f39a3983f0.png)
+
+* DeepFM
+如果我们按照类别特征喂给FM，类别特征+连续特征喂给DNN，我们就可以对DNN部分使用残差网络。!
+
+![v2-3e4ab11c3d125df0d3659691b2b116da_1440w](https://user-images.githubusercontent.com/68730894/116390796-fbc87300-a850-11eb-94ea-b5f76367333a.jpg)
+
+并且我们认为FM是自带残差网络效果的。
+
+[v2-3e62201e619ea3452de06ee9ed0ac0cc_1440w](https://user-images.githubusercontent.com/68730894/116391019-3c27f100-a851-11eb-93d5-ab3f46976304.jpg)
+
+
